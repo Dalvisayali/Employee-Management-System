@@ -4,6 +4,8 @@
  */
 package employeedataapp.ui;
 
+import employeedataapp.model.EmployeeData;
+
 
 /**
  *
@@ -15,32 +17,39 @@ public class WelcomePage extends javax.swing.JFrame {
     /**
      * Creates new form WelcomePage
      */
+    
+    public EmployeeData employeeData;
+    
     public WelcomePage() {
         initComponents();
+        employeeData = new EmployeeData(1);
+        addViewTab();
         addInsertTab();
+        addUpdateTab();
+        addDeleteTab();
         
     }
     
     private void addInsertTab(){
-        InsertJPanel p1=new InsertJPanel();
+        InsertJPanel p1=new InsertJPanel(employeeData);
         p1.setVisible(true);
         jTabbedPane2.add("Insert", p1);
     }
     
     private void addViewTab(){
-        InsertJPanel p1=new InsertJPanel();
-        p1.setVisible(true);
-        jTabbedPane2.add("View", p1);
+        ViewEmployeePanel p2=new ViewEmployeePanel(employeeData);
+        p2.setVisible(true);
+        jTabbedPane2.add("View", p2);
     }
     
     private void addUpdateTab(){
-        InsertJPanel p1=new InsertJPanel();
+        InsertJPanel p1=new InsertJPanel(employeeData);
         p1.setVisible(true);
         jTabbedPane2.add("Update", p1);
     }
     
     private void addDeleteTab(){
-        InsertJPanel p1=new InsertJPanel();
+        InsertJPanel p1=new InsertJPanel(employeeData);
         p1.setVisible(true);
         jTabbedPane2.add("Delete", p1);
     }

@@ -5,23 +5,51 @@
 package employeedataapp.ui;
 
 import employeedataapp.model.Employee;
+import employeedataapp.model.EmployeeData;
 import javax.swing.JOptionPane;
-import javax.swing.JTextArea;
 
 /**
  *
  * @author Sayali Dalvi
  */
-public class InsertJPanel extends javax.swing.JPanel {
+public class InsertJPanel extends javax.swing.JPanel{
 
     /**
      * Creates new form InsertJPanel
      */
-    public InsertJPanel() {
+    
+    public String gender = "";
+    public EmployeeData employeeData ;
+    private static long ID = 1;
+    
+    public InsertJPanel(EmployeeData employeeData) {
         initComponents();
+        
+        this.employeeData = employeeData;
+        createButtonGroup();
     }
     
+  
     
+    private void createButtonGroup(){
+        radioButtonGroup.add(jMaleRadioButton);
+        radioButtonGroup.add(jFemaleRadioButton);
+        radioButtonGroup.add(jOtherRadioButton);
+    }
+    
+    private void resetForm(){
+        jNameText.setText("");
+        jAgeText.setText("");
+        jMaleRadioButton.setSelected(false);
+        jFemaleRadioButton.setSelected(false);
+        jOtherRadioButton.setSelected(false);
+        jStartDateText.setText("");
+        jLevelText.setText("");
+        jTeamText.setText("");
+        jPositionText.setText("");
+        jEmailText.setText("");
+        jPhoneText.setText("");
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -32,6 +60,7 @@ public class InsertJPanel extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        radioButtonGroup = new javax.swing.ButtonGroup();
         jPanel3 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
@@ -90,8 +119,18 @@ public class InsertJPanel extends javax.swing.JPanel {
         });
 
         jMaleRadioButton.setText("Male");
+        jMaleRadioButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMaleRadioButtonActionPerformed(evt);
+            }
+        });
 
         jFemaleRadioButton.setText("Female");
+        jFemaleRadioButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jFemaleRadioButtonActionPerformed(evt);
+            }
+        });
 
         jOtherRadioButton.setText("Other");
         jOtherRadioButton.addActionListener(new java.awt.event.ActionListener() {
@@ -241,8 +280,11 @@ public class InsertJPanel extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    
+    
     private void jOtherRadioButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jOtherRadioButtonActionPerformed
         // TODO add your handling code here:
+        gender = "Other";
     }//GEN-LAST:event_jOtherRadioButtonActionPerformed
 
     private void jStartDateTextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jStartDateTextActionPerformed
@@ -252,9 +294,10 @@ public class InsertJPanel extends javax.swing.JPanel {
     private void jAddButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jAddButtonActionPerformed
         // TODO add your handling code here:
         Employee employee = new Employee();
+        employee.setEmployeeId(ID++);
         employee.setName(jNameText.getText());
         employee.setAge(Integer.parseInt(jAgeText.getText()));
-        employee.setGender(jNameText.getText());
+        employee.setGender(gender);
         employee.setStartDate(jStartDateText.getText());
         employee.setLevel(jLevelText.getText());
         employee.setTeamInfo(jTeamText.getText());
@@ -262,7 +305,10 @@ public class InsertJPanel extends javax.swing.JPanel {
         employee.setEmailId(jEmailText.getText());
         employee.setPhone(jPhoneText.getText());
         
-        JOptionPane.showMessageDialog(this, employee.toString());
+        employee = employeeData.addNewEmployee(employee);
+        this.resetForm();
+        
+        JOptionPane.showMessageDialog(this, "Employee data saved successfully ! \n"+employee.toString());
         
     }//GEN-LAST:event_jAddButtonActionPerformed
 
@@ -280,16 +326,19 @@ public class InsertJPanel extends javax.swing.JPanel {
 
     private void jResetButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jResetButtonActionPerformed
         // TODO add your handling code here:
+        this.resetForm();
         
-        jNameText.setText("");
-        jAgeText.setText("");
-        jStartDateText.setText("");
-        jLevelText.setText("");
-        jTeamText.setText("");
-        jPositionText.setText("");
-        jEmailText.setText("");
-        jPhoneText.setText("");
     }//GEN-LAST:event_jResetButtonActionPerformed
+
+    private void jMaleRadioButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMaleRadioButtonActionPerformed
+        // TODO add your handling code here:
+        gender = "M";
+    }//GEN-LAST:event_jMaleRadioButtonActionPerformed
+
+    private void jFemaleRadioButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jFemaleRadioButtonActionPerformed
+        // TODO add your handling code here:
+        gender = "F";
+    }//GEN-LAST:event_jFemaleRadioButtonActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -317,5 +366,6 @@ public class InsertJPanel extends javax.swing.JPanel {
     private javax.swing.JButton jResetButton;
     private javax.swing.JTextField jStartDateText;
     private javax.swing.JTextField jTeamText;
+    private javax.swing.ButtonGroup radioButtonGroup;
     // End of variables declaration//GEN-END:variables
 }
