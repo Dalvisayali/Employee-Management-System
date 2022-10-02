@@ -12,6 +12,7 @@ import java.util.ArrayList;
  */
 public class EmployeeData {
     private ArrayList<Employee> employeeList;
+    private long id;
 
     public EmployeeData() {
         this.employeeList = new ArrayList<>();
@@ -20,6 +21,7 @@ public class EmployeeData {
     public EmployeeData(long id) {
         this.employeeList = new ArrayList<>();
         initialiseList(id);
+        
     }
     
 
@@ -30,6 +32,14 @@ public class EmployeeData {
     public void setEmployeeList(ArrayList<Employee> employeeList) {
         this.employeeList = employeeList;
     }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
     
     public Employee addNewEmployee(Employee employee){
         employeeList.add(employee);
@@ -38,10 +48,12 @@ public class EmployeeData {
 
     @Override
     public String toString() {
-        return "EmployeeData{" + "employeeList=" + employeeList + '}';
+        return "EmployeeData{" + "employeeList=" + employeeList + ", id=" + id + '}';
     }
+
+ 
     
-    public void initialiseList(long id){
+    private void initialiseList(long id){
         Employee employee = new Employee();
         employee.setEmployeeId(id++);
         employee.setName("Sayali Dalvi");
@@ -56,6 +68,7 @@ public class EmployeeData {
         
         this.employeeList.add(employee);
         
+        employee = new Employee();
         employee.setEmployeeId(id++);
         employee.setName("Sayali Dalvi");
         employee.setAge(Integer.parseInt("25"));
@@ -69,6 +82,7 @@ public class EmployeeData {
         
         this.employeeList.add(employee);
         
+        employee = new Employee();
         employee.setEmployeeId(id++);
         employee.setName("Sayali Dalvi");
         employee.setAge(Integer.parseInt("25"));
@@ -82,6 +96,7 @@ public class EmployeeData {
         
         this.employeeList.add(employee);
         
+        employee = new Employee();
         employee.setEmployeeId(id++);
         employee.setName("Sayali Dalvi");
         employee.setAge(Integer.parseInt("25"));
@@ -95,6 +110,7 @@ public class EmployeeData {
         
         this.employeeList.add(employee);
         
+        employee = new Employee();
         employee.setEmployeeId(id++);
         employee.setName("Sayali Dalvi");
         employee.setAge(Integer.parseInt("25"));
@@ -108,6 +124,7 @@ public class EmployeeData {
         
         this.employeeList.add(employee);
         
+        employee = new Employee();
         employee.setEmployeeId(id++);
         employee.setName("Sayali Dalvi");
         employee.setAge(Integer.parseInt("25"));
@@ -120,6 +137,8 @@ public class EmployeeData {
         employee.setPhone("7875640640");
         
         this.employeeList.add(employee);
+        this.id = id;
+        
     }
     
 }

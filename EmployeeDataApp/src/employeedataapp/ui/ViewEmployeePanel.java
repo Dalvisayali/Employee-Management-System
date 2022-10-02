@@ -4,7 +4,13 @@
  */
 package employeedataapp.ui;
 
+import employeedataapp.model.Employee;
 import employeedataapp.model.EmployeeData;
+import java.util.ArrayList;
+import javax.swing.JTable;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -17,18 +23,51 @@ public class ViewEmployeePanel extends javax.swing.JPanel {
      */
     
     public EmployeeData employeeData;
+    public static final String COLUMNS[] = {"ID", "NAME", "GENDER", "LEVEL", "TEAM",};
+    private DefaultTableModel tableModel;
+    
     
     public ViewEmployeePanel() {
         initComponents();
     }
 
     public ViewEmployeePanel(EmployeeData employeeData) {
+        initComponents();
         this.employeeData = employeeData;
+        initialiseTable(this.employeeData);
+        
     }
     
-    public void initialiseTable(){
-      
+    public void initialiseTable(EmployeeData employeeData){
+        String[][] data = new String[employeeData.getEmployeeList().size()][5];
+        int i=0;
+        for( Employee employee : employeeData.getEmployeeList()){
+            data[i][0] = String.valueOf(employee.getEmployeeId());
+            data[i][1] = employee.getName();
+            data[i][2] = employee.getGender();
+            data[i][3] = employee.getLevel();
+            data[i][4] = employee.getTeamInfo();
+//            System.out.println("Row Data : "+data[i][0]+data[i][1]+data[i][2]+data[i][3]+data[i][4]);
+            i++;
+        }
+ 
+        // Initializing the JTable
+        tableModel = new DefaultTableModel(data, COLUMNS);
+        jTable1.setModel(tableModel);
+        
+        
+        jTable1.getSelectionModel().addListSelectionListener(new ListSelectionListener(){
+        @Override
+        public void valueChanged(ListSelectionEvent event) {
+            // do some actions here, for example
+            // print first column value from selected row
+            System.out.println(jTable1.getValueAt(jTable1.getSelectedRow(), 0).toString());
+        }
+        });
+        
     }
+    
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -39,7 +78,7 @@ public class ViewEmployeePanel extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jScrollPane1 = new javax.swing.JScrollPane();
+        jScrollPane2 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
@@ -53,29 +92,29 @@ public class ViewEmployeePanel extends javax.swing.JPanel {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane2.setViewportView(jTable1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(34, 34, 34)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 849, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(29, Short.MAX_VALUE))
+                .addContainerGap()
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 900, Short.MAX_VALUE)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(27, 27, 27)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 439, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(34, Short.MAX_VALUE))
+                .addGap(28, 28, 28)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 466, Short.MAX_VALUE)
+                .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable jTable1;
     // End of variables declaration//GEN-END:variables
 }

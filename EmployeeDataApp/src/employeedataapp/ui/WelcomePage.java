@@ -5,6 +5,8 @@
 package employeedataapp.ui;
 
 import employeedataapp.model.EmployeeData;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 
 
 /**
@@ -19,40 +21,55 @@ public class WelcomePage extends javax.swing.JFrame {
      */
     
     public EmployeeData employeeData;
+    private long ID = 1;
+    public ViewEmployeePanel p2;
     
     public WelcomePage() {
         initComponents();
-        employeeData = new EmployeeData(1);
-        addViewTab();
-        addInsertTab();
-        addUpdateTab();
-        addDeleteTab();
+        this.employeeData = new EmployeeData(ID);
+        this.ID = employeeData.getId();
+            addViewTab();
+            addInsertTab();
+            addUpdateTab();
+            addDeleteTab();
+        
+    jTabbedPane2.addChangeListener(new ChangeListener() {
+        @Override
+        public void stateChanged(ChangeEvent e) {
+            System.out.println("Tab: " + jTabbedPane2.getSelectedIndex());
+            p2.initialiseTable(employeeData);
+            System.out.println("Employee Data : "+employeeData.toString());
+        }
+    });
+        
+        
         
     }
     
     private void addInsertTab(){
-        InsertJPanel p1=new InsertJPanel(employeeData);
+        InsertJPanel p1=new InsertJPanel(employeeData, ID);
         p1.setVisible(true);
         jTabbedPane2.add("Insert", p1);
     }
     
     private void addViewTab(){
-        ViewEmployeePanel p2=new ViewEmployeePanel(employeeData);
+        p2=new ViewEmployeePanel(employeeData);
         p2.setVisible(true);
         jTabbedPane2.add("View", p2);
     }
     
     private void addUpdateTab(){
-        InsertJPanel p1=new InsertJPanel(employeeData);
+        InsertJPanel p1=new InsertJPanel(employeeData, ID);
         p1.setVisible(true);
         jTabbedPane2.add("Update", p1);
     }
     
     private void addDeleteTab(){
-        InsertJPanel p1=new InsertJPanel(employeeData);
+        InsertJPanel p1=new InsertJPanel(employeeData, ID);
         p1.setVisible(true);
         jTabbedPane2.add("Delete", p1);
     }
+    
 
     /**
      * This method is called from within the constructor to initialize the form.

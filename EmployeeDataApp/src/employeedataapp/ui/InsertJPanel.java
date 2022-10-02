@@ -20,12 +20,13 @@ public class InsertJPanel extends javax.swing.JPanel{
     
     public String gender = "";
     public EmployeeData employeeData ;
-    private static long ID = 1;
+    public long ID;
     
-    public InsertJPanel(EmployeeData employeeData) {
+    public InsertJPanel(EmployeeData employeeData, long ID) {
         initComponents();
         
         this.employeeData = employeeData;
+        this.ID = ID;
         createButtonGroup();
     }
     
@@ -306,7 +307,10 @@ public class InsertJPanel extends javax.swing.JPanel{
         employee.setPhone(jPhoneText.getText());
         
         employee = employeeData.addNewEmployee(employee);
+        System.out.println(employeeData.toString());
         this.resetForm();
+        
+        
         
         JOptionPane.showMessageDialog(this, "Employee data saved successfully ! \n"+employee.toString());
         
