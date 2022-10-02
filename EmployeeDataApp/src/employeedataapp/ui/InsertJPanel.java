@@ -8,6 +8,7 @@ import employeedataapp.model.Employee;
 import employeedataapp.model.EmployeeData;
 import java.awt.Image;
 import java.io.File;
+import java.util.regex.Pattern;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
@@ -27,12 +28,15 @@ public class InsertJPanel extends javax.swing.JPanel{
     public EmployeeData employeeData ;
     public long ID;
     public String selectedImagePath = "";
+    public String selectedLevel = "";
+    public boolean isUpdateScreen = false;
     
     public InsertJPanel(EmployeeData employeeData, long ID) {
         initComponents();
         
         this.employeeData = employeeData;
         this.ID = ID;
+//        this.isUpdateScreen = isUpdate;
         System.out.println("Inside InsertPanel");
         createButtonGroup();
     }
@@ -47,7 +51,8 @@ public class InsertJPanel extends javax.swing.JPanel{
         if(emp.getGender().equalsIgnoreCase("Other"))
             jOtherRadioButton.setSelected(true);
         jStartDateText.setText(emp.getStartDate());
-        jLevelText.setText(emp.getLevel());
+        jLevelComboBox.setSelectedItem(emp.getLevel());
+//        jLevelText.setText(emp.getLevel());
         jTeamText.setText(emp.getTeamInfo());
         jPositionText.setText(emp.getPositionTitle());
         jEmailText.setText(emp.getEmailId());
@@ -60,6 +65,13 @@ public class InsertJPanel extends javax.swing.JPanel{
         radioButtonGroup.add(jMaleRadioButton);
         radioButtonGroup.add(jFemaleRadioButton);
         radioButtonGroup.add(jOtherRadioButton);
+        
+        jLevelComboBox.addItem("L1");
+        jLevelComboBox.addItem("L2");
+        jLevelComboBox.addItem("L3");
+        jLevelComboBox.addItem("L4");
+        jLevelComboBox.addItem("L5");
+        jLevelComboBox.addItem("L6");
     }
     
     private void resetForm(){
@@ -67,7 +79,7 @@ public class InsertJPanel extends javax.swing.JPanel{
         jAgeText.setText("");
         radioButtonGroup.clearSelection();
         jStartDateText.setText("");
-        jLevelText.setText("");
+        jLevelComboBox.setSelectedIndex(0);
         jTeamText.setText("");
         jPositionText.setText("");
         jEmailText.setText("");
@@ -102,7 +114,6 @@ public class InsertJPanel extends javax.swing.JPanel{
         jFemaleRadioButton = new javax.swing.JRadioButton();
         jOtherRadioButton = new javax.swing.JRadioButton();
         jStartDateText = new javax.swing.JTextField();
-        jLevelText = new javax.swing.JTextField();
         jTeamText = new javax.swing.JTextField();
         jPositionText = new javax.swing.JTextField();
         jEmailText = new javax.swing.JTextField();
@@ -112,6 +123,7 @@ public class InsertJPanel extends javax.swing.JPanel{
         jBrowseButton = new javax.swing.JButton();
         jLabelImage = new javax.swing.JLabel();
         jFilePathLabel = new javax.swing.JLabel();
+        jLevelComboBox = new javax.swing.JComboBox<>();
 
         jLabel1.setText("Name");
 
@@ -133,6 +145,12 @@ public class InsertJPanel extends javax.swing.JPanel{
 
         jLabel10.setText("Photo");
 
+        jAgeText.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                jAgeTextFocusLost(evt);
+            }
+        });
+
         jMaleRadioButton.setText("Male");
         jMaleRadioButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -151,6 +169,18 @@ public class InsertJPanel extends javax.swing.JPanel{
         jOtherRadioButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jOtherRadioButtonActionPerformed(evt);
+            }
+        });
+
+        jEmailText.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                jEmailTextFocusLost(evt);
+            }
+        });
+
+        jPhoneText.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                jPhoneTextFocusLost(evt);
             }
         });
 
@@ -182,6 +212,12 @@ public class InsertJPanel extends javax.swing.JPanel{
 
         jLabelImage.setText("jLabel11");
 
+        jLevelComboBox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jLevelComboBoxActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
@@ -201,25 +237,26 @@ public class InsertJPanel extends javax.swing.JPanel{
                         .addComponent(jLabel9, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jLabel10, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addGap(142, 142, 142)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addComponent(jMaleRadioButton)
-                        .addGap(18, 18, 18)
-                        .addComponent(jFemaleRadioButton)
-                        .addGap(18, 18, 18)
-                        .addComponent(jOtherRadioButton))
-                    .addComponent(jStartDateText)
-                    .addComponent(jLevelText, javax.swing.GroupLayout.DEFAULT_SIZE, 295, Short.MAX_VALUE)
-                    .addComponent(jTeamText, javax.swing.GroupLayout.DEFAULT_SIZE, 295, Short.MAX_VALUE)
-                    .addComponent(jPositionText, javax.swing.GroupLayout.DEFAULT_SIZE, 295, Short.MAX_VALUE)
-                    .addComponent(jEmailText, javax.swing.GroupLayout.DEFAULT_SIZE, 295, Short.MAX_VALUE)
-                    .addComponent(jPhoneText, javax.swing.GroupLayout.DEFAULT_SIZE, 295, Short.MAX_VALUE)
-                    .addComponent(jAgeText)
-                    .addComponent(jNameText)
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addComponent(jBrowseButton)
-                        .addGap(18, 18, 18)
-                        .addComponent(jFilePathLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addGroup(jPanel3Layout.createSequentialGroup()
+                            .addComponent(jMaleRadioButton)
+                            .addGap(18, 18, 18)
+                            .addComponent(jFemaleRadioButton)
+                            .addGap(18, 18, 18)
+                            .addComponent(jOtherRadioButton))
+                        .addComponent(jStartDateText)
+                        .addComponent(jTeamText, javax.swing.GroupLayout.DEFAULT_SIZE, 295, Short.MAX_VALUE)
+                        .addComponent(jPositionText, javax.swing.GroupLayout.DEFAULT_SIZE, 295, Short.MAX_VALUE)
+                        .addComponent(jEmailText, javax.swing.GroupLayout.DEFAULT_SIZE, 295, Short.MAX_VALUE)
+                        .addComponent(jPhoneText, javax.swing.GroupLayout.DEFAULT_SIZE, 295, Short.MAX_VALUE)
+                        .addComponent(jAgeText)
+                        .addComponent(jNameText)
+                        .addGroup(jPanel3Layout.createSequentialGroup()
+                            .addComponent(jBrowseButton)
+                            .addGap(18, 18, 18)
+                            .addComponent(jFilePathLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addComponent(jLevelComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addGap(86, 86, 86)
@@ -253,8 +290,8 @@ public class InsertJPanel extends javax.swing.JPanel{
                     .addComponent(jStartDateText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLevelText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel5))
+                    .addComponent(jLabel5)
+                    .addComponent(jLevelComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jTeamText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -325,7 +362,7 @@ public class InsertJPanel extends javax.swing.JPanel{
         employee.setAge(Integer.parseInt(jAgeText.getText()));
         employee.setGender(gender);
         employee.setStartDate(jStartDateText.getText());
-        employee.setLevel(jLevelText.getText());
+        employee.setLevel(selectedLevel);
         employee.setTeamInfo(jTeamText.getText());
         employee.setPositionTitle(jPositionText.getText());
         employee.setEmailId(jEmailText.getText());
@@ -383,7 +420,58 @@ public class InsertJPanel extends javax.swing.JPanel{
         }
     }//GEN-LAST:event_jBrowseButtonActionPerformed
 
+    private void jLevelComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jLevelComboBoxActionPerformed
+        // TODO add your handling code here:
+        selectedLevel = jLevelComboBox.getItemAt(jLevelComboBox.getSelectedIndex());
+    }//GEN-LAST:event_jLevelComboBoxActionPerformed
 
+    private void jAgeTextFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jAgeTextFocusLost
+        // TODO add your handling code here:
+        if( ! isNumeric(jAgeText.getText())){
+            JOptionPane.showMessageDialog(this,
+    "Age should be an integer.",
+    "Error",
+    JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_jAgeTextFocusLost
+
+    private void jPhoneTextFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jPhoneTextFocusLost
+        // TODO add your handling code here:
+        if( !isNumeric(jPhoneText.getText()) || jPhoneText.getText().length() < 10){
+            JOptionPane.showMessageDialog(this,
+    "Phone should be a 10 digit number.",
+    "Error",
+    JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_jPhoneTextFocusLost
+
+    private void jEmailTextFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jEmailTextFocusLost
+        // TODO add your handling code here:
+        String regexPattern = "^(.+)@(\\S+)$";
+        String emailAddress = jEmailText.getText();
+        if( !Pattern.compile(regexPattern).matcher(emailAddress).matches()){
+            JOptionPane.showMessageDialog(this,
+    "Email Id should be in \"username@domain.com\" format.",
+    "Error",
+    JOptionPane.ERROR_MESSAGE);
+        }
+        
+    }//GEN-LAST:event_jEmailTextFocusLost
+
+
+    public static boolean isNumeric(String strNum) {
+    if (strNum == null) {
+        return false;
+    }
+    try {
+        int d = Integer.parseInt(strNum);
+    } catch (NumberFormatException nfe) {
+        return false;
+    }
+    return true;
+}
+    
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jAddButton;
     private javax.swing.JTextField jAgeText;
@@ -402,7 +490,7 @@ public class InsertJPanel extends javax.swing.JPanel{
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JLabel jLabelImage;
-    private javax.swing.JTextField jLevelText;
+    private javax.swing.JComboBox<String> jLevelComboBox;
     private javax.swing.JRadioButton jMaleRadioButton;
     private javax.swing.JTextField jNameText;
     private javax.swing.JRadioButton jOtherRadioButton;

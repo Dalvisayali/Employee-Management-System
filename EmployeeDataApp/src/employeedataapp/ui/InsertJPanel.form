@@ -66,27 +66,29 @@
                       </Group>
                   </Group>
                   <EmptySpace min="-2" pref="142" max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                      <Group type="102" alignment="0" attributes="0">
-                          <Component id="jMaleRadioButton" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace type="separate" max="-2" attributes="0"/>
-                          <Component id="jFemaleRadioButton" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace type="separate" max="-2" attributes="0"/>
-                          <Component id="jOtherRadioButton" min="-2" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                          <Group type="102" alignment="0" attributes="0">
+                              <Component id="jMaleRadioButton" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace type="separate" max="-2" attributes="0"/>
+                              <Component id="jFemaleRadioButton" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace type="separate" max="-2" attributes="0"/>
+                              <Component id="jOtherRadioButton" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <Component id="jStartDateText" alignment="0" max="32767" attributes="0"/>
+                          <Component id="jTeamText" alignment="0" pref="295" max="32767" attributes="0"/>
+                          <Component id="jPositionText" alignment="0" pref="295" max="32767" attributes="0"/>
+                          <Component id="jEmailText" alignment="0" pref="295" max="32767" attributes="0"/>
+                          <Component id="jPhoneText" alignment="0" pref="295" max="32767" attributes="0"/>
+                          <Component id="jAgeText" alignment="0" max="32767" attributes="0"/>
+                          <Component id="jNameText" alignment="0" max="32767" attributes="0"/>
+                          <Group type="102" attributes="0">
+                              <Component id="jBrowseButton" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace type="separate" max="-2" attributes="0"/>
+                              <Component id="jFilePathLabel" max="32767" attributes="0"/>
+                          </Group>
                       </Group>
-                      <Component id="jStartDateText" alignment="0" max="32767" attributes="0"/>
-                      <Component id="jLevelText" alignment="0" pref="295" max="32767" attributes="0"/>
-                      <Component id="jTeamText" alignment="0" pref="295" max="32767" attributes="0"/>
-                      <Component id="jPositionText" alignment="0" pref="295" max="32767" attributes="0"/>
-                      <Component id="jEmailText" alignment="0" pref="295" max="32767" attributes="0"/>
-                      <Component id="jPhoneText" alignment="0" pref="295" max="32767" attributes="0"/>
-                      <Component id="jAgeText" alignment="0" max="32767" attributes="0"/>
-                      <Component id="jNameText" alignment="0" max="32767" attributes="0"/>
-                      <Group type="102" attributes="0">
-                          <Component id="jBrowseButton" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace type="separate" max="-2" attributes="0"/>
-                          <Component id="jFilePathLabel" max="32767" attributes="0"/>
-                      </Group>
+                      <Component id="jLevelComboBox" min="-2" pref="99" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace max="32767" attributes="0"/>
               </Group>
@@ -128,8 +130,8 @@
                   </Group>
                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="jLevelText" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="jLabel5" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="jLevelComboBox" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
@@ -229,6 +231,9 @@
         <Component class="javax.swing.JTextField" name="jNameText">
         </Component>
         <Component class="javax.swing.JTextField" name="jAgeText">
+          <Events>
+            <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="jAgeTextFocusLost"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JRadioButton" name="jMaleRadioButton">
           <Properties>
@@ -256,15 +261,19 @@
         </Component>
         <Component class="javax.swing.JTextField" name="jStartDateText">
         </Component>
-        <Component class="javax.swing.JTextField" name="jLevelText">
-        </Component>
         <Component class="javax.swing.JTextField" name="jTeamText">
         </Component>
         <Component class="javax.swing.JTextField" name="jPositionText">
         </Component>
         <Component class="javax.swing.JTextField" name="jEmailText">
+          <Events>
+            <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="jEmailTextFocusLost"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JTextField" name="jPhoneText">
+          <Events>
+            <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="jPhoneTextFocusLost"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JButton" name="jAddButton">
           <Properties>
@@ -297,6 +306,19 @@
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="jFilePathLabel">
+        </Component>
+        <Component class="javax.swing.JComboBox" name="jLevelComboBox">
+          <Properties>
+            <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
+              <StringArray count="0"/>
+            </Property>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jLevelComboBoxActionPerformed"/>
+          </Events>
+          <AuxValues>
+            <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
+          </AuxValues>
         </Component>
       </SubComponents>
     </Container>
