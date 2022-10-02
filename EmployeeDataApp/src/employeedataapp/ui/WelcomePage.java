@@ -23,6 +23,7 @@ public class WelcomePage extends javax.swing.JFrame {
     public EmployeeData employeeData;
     private long ID = 1;
     public ViewEmployeePanel p2;
+    public InsertJPanel p1;
     
     public WelcomePage() {
         initComponents();
@@ -37,7 +38,9 @@ public class WelcomePage extends javax.swing.JFrame {
         public void stateChanged(ChangeEvent e) {
             System.out.println("Tab: " + jTabbedPane2.getSelectedIndex());
             p2.initialiseTable(employeeData);
-            System.out.println("Employee Data : "+employeeData.toString());
+            p1=new InsertJPanel(employeeData, ID);
+            jTabbedPane2.setComponentAt(1,p1);
+//            System.out.println("Employee Data : "+employeeData.toString());
         }
     });
         
@@ -46,7 +49,7 @@ public class WelcomePage extends javax.swing.JFrame {
     }
     
     private void addInsertTab(){
-        InsertJPanel p1=new InsertJPanel(employeeData, ID);
+        p1=new InsertJPanel(employeeData, ID);
         p1.setVisible(true);
         jTabbedPane2.add("Insert", p1);
     }
@@ -81,6 +84,8 @@ public class WelcomePage extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("WelcomeJFrame");
 
+        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
+
         jTabbedPane2.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jTabbedPane2MouseClicked(evt);
@@ -91,9 +96,7 @@ public class WelcomePage extends javax.swing.JFrame {
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addGap(0, 6, Short.MAX_VALUE)
-                .addComponent(jTabbedPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 905, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addComponent(jTabbedPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 911, Short.MAX_VALUE)
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)

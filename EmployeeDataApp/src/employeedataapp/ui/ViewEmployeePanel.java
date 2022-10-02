@@ -6,14 +6,19 @@ package employeedataapp.ui;
 
 import employeedataapp.model.Employee;
 import employeedataapp.model.EmployeeData;
+import java.awt.Color;
+import java.awt.Font;
 import java.util.ArrayList;
+import javax.swing.JLabel;
 import javax.swing.JTabbedPane;
 import javax.swing.JTable;
 import javax.swing.RowFilter;
 import javax.swing.SwingUtilities;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.JTableHeader;
 import javax.swing.table.TableRowSorter;
 
 /**
@@ -30,8 +35,9 @@ public class ViewEmployeePanel extends javax.swing.JPanel {
     public static final String COLUMNS[] = {"ID", "NAME", "GENDER", "LEVEL", "TEAM"};
     private DefaultTableModel tableModel;
     
-    public UpdateJFrame updateJFrame;
+    
     public UpdateJPanel updateJPanel;
+    public InsertJPanel insertJPanel;
     
     public ViewEmployeePanel() {
         initComponents();
@@ -41,7 +47,7 @@ public class ViewEmployeePanel extends javax.swing.JPanel {
         initComponents();
         this.employeeData = employeeData;
         initialiseTable(this.employeeData);
-        
+        setTableProperties();
     }
     
     public void initialiseTable(EmployeeData employeeData){
@@ -79,6 +85,21 @@ public class ViewEmployeePanel extends javax.swing.JPanel {
         jTable1.setRowSorter(tr);
         tr.setRowFilter(RowFilter.regexFilter(query));
     }
+    
+    public void setTableProperties(){
+        JTableHeader tableHeader = jTable1.getTableHeader();
+        Font font = new Font("Verdana", Font.PLAIN, 15);
+        tableHeader.setFont(font);
+        tableHeader.setForeground(Color.black);
+        
+        jTable1.getColumnModel().getColumn(0).setResizable(false);
+        jTable1.getColumnModel().getColumn(0).setPreferredWidth(3);
+         DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
+        centerRenderer.setHorizontalAlignment(JLabel.CENTER);
+
+//        jTable1.getColumnModel().getColumn(0).setCellRenderer(centerRenderer);
+        jTable1.getColumnModel().getColumn(1).setCellRenderer(centerRenderer);
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -106,6 +127,8 @@ public class ViewEmployeePanel extends javax.swing.JPanel {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        jTable1.setRowHeight(25);
+        jTable1.setRowMargin(5);
         jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jTable1MouseClicked(evt);
@@ -131,24 +154,25 @@ public class ViewEmployeePanel extends javax.swing.JPanel {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane2)
-                .addContainerGap())
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(141, Short.MAX_VALUE)
-                .addComponent(jLabel2)
-                .addGap(30, 30, 30)
-                .addComponent(jQueryTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 508, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(189, 189, 189))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(139, 139, 139)
+                        .addComponent(jLabel2)
+                        .addGap(18, 18, 18)
+                        .addComponent(jQueryTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 508, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 891, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(15, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(21, 21, 21)
+                .addContainerGap(28, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jQueryTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel2))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 24, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -162,12 +186,18 @@ public class ViewEmployeePanel extends javax.swing.JPanel {
             
             //Add and open details tab to the tabbed pane
             JTabbedPane parent = (JTabbedPane) SwingUtilities.getAncestorOfClass(JTabbedPane.class, this);
-            updateJPanel = new UpdateJPanel(employeeData, searchEmployee(employeeId));
-            updateJPanel.setVisible(true);
-            parent.add("Details", updateJPanel);
-            updateJPanel.setEmployee(searchEmployee(employeeId));
-            parent.setSelectedIndex(2);
-//            new UpdateJFrame(employeeData,searchEmployee(employeeId));
+//            updateJPanel = new UpdateJPanel(employeeData, searchEmployee(employeeId));
+//            updateJPanel.setVisible(true);
+//            parent.add("Details", updateJPanel);
+//            updateJPanel.setEmployee(searchEmployee(employeeId));
+//            parent.setSelectedIndex(2);
+            
+            //open insert tab
+            parent.setSelectedIndex(1);
+            insertJPanel = new InsertJPanel(employeeData, employeeData.getId(),searchEmployee(employeeId));
+//            insertJPanel.setEmployee(searchEmployee(employeeId));
+            parent.setComponentAt(1, insertJPanel);
+            
         
     }//GEN-LAST:event_jTable1MouseClicked
 
