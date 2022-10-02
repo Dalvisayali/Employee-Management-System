@@ -9,10 +9,12 @@ import employeedataapp.model.EmployeeData;
 import java.util.ArrayList;
 import javax.swing.JTabbedPane;
 import javax.swing.JTable;
+import javax.swing.RowFilter;
 import javax.swing.SwingUtilities;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableRowSorter;
 
 /**
  *
@@ -71,7 +73,12 @@ public class ViewEmployeePanel extends javax.swing.JPanel {
         return null;
     }
     
-    
+    //Filter table data
+    public void filter(String query){
+        TableRowSorter<DefaultTableModel> tr = new TableRowSorter<>(tableModel);
+        jTable1.setRowSorter(tr);
+        tr.setRowFilter(RowFilter.regexFilter(query));
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -84,9 +91,12 @@ public class ViewEmployeePanel extends javax.swing.JPanel {
 
         jScrollPane2 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
+        jQueryTextField = new javax.swing.JTextField();
+        jLabel2 = new javax.swing.JLabel();
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
+                {null, null, null, null},
                 {null, null, null, null},
                 {null, null, null, null},
                 {null, null, null, null},
@@ -103,20 +113,43 @@ public class ViewEmployeePanel extends javax.swing.JPanel {
         });
         jScrollPane2.setViewportView(jTable1);
 
+        jQueryTextField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jQueryTextFieldActionPerformed(evt);
+            }
+        });
+        jQueryTextField.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jQueryTextFieldKeyReleased(evt);
+            }
+        });
+
+        jLabel2.setText("Search  :");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 900, Short.MAX_VALUE)
+                .addComponent(jScrollPane2)
                 .addContainerGap())
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(141, Short.MAX_VALUE)
+                .addComponent(jLabel2)
+                .addGap(30, 30, 30)
+                .addComponent(jQueryTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 508, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(189, 189, 189))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(28, 28, 28)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 466, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(21, 21, 21)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jQueryTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel2))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 24, Short.MAX_VALUE)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
@@ -124,9 +157,10 @@ public class ViewEmployeePanel extends javax.swing.JPanel {
     private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
         // TODO add your handling code here:
         
-            System.out.println(jTable1.getValueAt(jTable1.getSelectedRow(), 0).toString());
             long employeeId = Long.parseLong(jTable1.getValueAt(jTable1.getSelectedRow(), 0).toString());
             System.out.println("employee id = "+employeeId);
+            
+            //Add and open details tab to the tabbed pane
             JTabbedPane parent = (JTabbedPane) SwingUtilities.getAncestorOfClass(JTabbedPane.class, this);
             updateJPanel = new UpdateJPanel(employeeData, searchEmployee(employeeId));
             updateJPanel.setVisible(true);
@@ -137,8 +171,20 @@ public class ViewEmployeePanel extends javax.swing.JPanel {
         
     }//GEN-LAST:event_jTable1MouseClicked
 
+    private void jQueryTextFieldKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jQueryTextFieldKeyReleased
+        // TODO add your handling code here:
+        String query = jQueryTextField.getText();
+        filter(query);
+    }//GEN-LAST:event_jQueryTextFieldKeyReleased
+
+    private void jQueryTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jQueryTextFieldActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jQueryTextFieldActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JTextField jQueryTextField;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable jTable1;
     // End of variables declaration//GEN-END:variables

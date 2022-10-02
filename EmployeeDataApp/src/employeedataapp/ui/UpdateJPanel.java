@@ -8,6 +8,8 @@ import employeedataapp.model.Employee;
 import employeedataapp.model.EmployeeData;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
+import javax.swing.JTabbedPane;
+import javax.swing.SwingUtilities;
 
 /**
  *
@@ -26,10 +28,15 @@ public class UpdateJPanel extends javax.swing.JPanel {
     
     public UpdateJPanel(EmployeeData employeeData, Employee emp) {
         initComponents();
-        this.resetForm();
         this.employeeData = employeeData;
         this.emp = emp;
         this.ID = employeeData.getId();
+        this.createButtonGroup();
+    }
+    private void createButtonGroup(){
+        radioButtonGroup.add(jMaleRadioButton);
+        radioButtonGroup.add(jFemaleRadioButton);
+        radioButtonGroup.add(jOtherRadioButton);
     }
     
     
@@ -49,6 +56,9 @@ public class UpdateJPanel extends javax.swing.JPanel {
         jPositionText.setText(emp.getPositionTitle());
         jEmailText.setText(emp.getEmailId());
         jPhoneText.setText(emp.getPhone());
+       System.out.println("Inside set employee "+jLevelText.getText());
+       System.out.println("Inside set employee "+jTeamText.getText());
+       System.out.println("Inside set employee "+jPositionText.getText());
      }
    
    public boolean deleteEmployee(Employee emp){
@@ -56,20 +66,6 @@ public class UpdateJPanel extends javax.swing.JPanel {
        return employeeData.getEmployeeList().remove(emp);
    }
    
-   private void resetForm(){
-        jNameText.setText("");
-        jAgeText.setText("");
-        jMaleRadioButton.setSelected(false);
-        jFemaleRadioButton.setSelected(false);
-        jOtherRadioButton.setSelected(false);
-        jStartDateText.setText("");
-        jLevelText.setText("");
-        jTeamText.setText("");
-        jPositionText.setText("");
-        jEmailText.setText("");
-        jPhoneText.setText("");
-    }
-
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -80,6 +76,7 @@ public class UpdateJPanel extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        radioButtonGroup = new javax.swing.ButtonGroup();
         jPanel3 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
@@ -358,7 +355,9 @@ public class UpdateJPanel extends javax.swing.JPanel {
             }
         }
 //        System.out.println(employeeData.toString());
-
+        JTabbedPane parent = (JTabbedPane) SwingUtilities.getAncestorOfClass(JTabbedPane.class, this);
+        parent.remove(this);
+        parent.setSelectedIndex(0);
         JOptionPane.showMessageDialog(this, "Employee data saved successfully ! \n"+employee.toString());
 
     }//GEN-LAST:event_jAddButtonActionPerformed
@@ -400,5 +399,6 @@ public class UpdateJPanel extends javax.swing.JPanel {
     private javax.swing.JButton jResetButton;
     private javax.swing.JTextField jStartDateText;
     private javax.swing.JTextField jTeamText;
+    private javax.swing.ButtonGroup radioButtonGroup;
     // End of variables declaration//GEN-END:variables
 }
