@@ -6,7 +6,12 @@ package employeedataapp.ui;
 
 import employeedataapp.model.Employee;
 import employeedataapp.model.EmployeeData;
+import java.awt.Image;
+import java.io.File;
+import javax.swing.ImageIcon;
+import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 /**
  *
@@ -21,6 +26,7 @@ public class InsertJPanel extends javax.swing.JPanel{
     public String gender = "";
     public EmployeeData employeeData ;
     public long ID;
+    public String selectedImagePath = "";
     
     public InsertJPanel(EmployeeData employeeData, long ID) {
         initComponents();
@@ -46,6 +52,7 @@ public class InsertJPanel extends javax.swing.JPanel{
         jPositionText.setText(emp.getPositionTitle());
         jEmailText.setText(emp.getEmailId());
         jPhoneText.setText(emp.getPhone());
+        jFilePathLabel.setText(emp.getPhotoPath());
      }
 
     
@@ -58,15 +65,14 @@ public class InsertJPanel extends javax.swing.JPanel{
     private void resetForm(){
         jNameText.setText("");
         jAgeText.setText("");
-        jMaleRadioButton.setSelected(false);
-        jFemaleRadioButton.setSelected(false);
-        jOtherRadioButton.setSelected(false);
+        radioButtonGroup.clearSelection();
         jStartDateText.setText("");
         jLevelText.setText("");
         jTeamText.setText("");
         jPositionText.setText("");
         jEmailText.setText("");
         jPhoneText.setText("");
+        jFilePathLabel.setText("");
     }
 
     /**
@@ -103,6 +109,9 @@ public class InsertJPanel extends javax.swing.JPanel{
         jPhoneText = new javax.swing.JTextField();
         jAddButton = new javax.swing.JButton();
         jResetButton = new javax.swing.JButton();
+        jBrowseButton = new javax.swing.JButton();
+        jLabelImage = new javax.swing.JLabel();
+        jFilePathLabel = new javax.swing.JLabel();
 
         jLabel1.setText("Name");
 
@@ -123,18 +132,6 @@ public class InsertJPanel extends javax.swing.JPanel{
         jLabel9.setText("Phone no.");
 
         jLabel10.setText("Photo");
-
-        jNameText.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jNameTextActionPerformed(evt);
-            }
-        });
-
-        jAgeText.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jAgeTextActionPerformed(evt);
-            }
-        });
 
         jMaleRadioButton.setText("Male");
         jMaleRadioButton.addActionListener(new java.awt.event.ActionListener() {
@@ -157,18 +154,6 @@ public class InsertJPanel extends javax.swing.JPanel{
             }
         });
 
-        jStartDateText.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jStartDateTextActionPerformed(evt);
-            }
-        });
-
-        jLevelText.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jLevelTextActionPerformed(evt);
-            }
-        });
-
         jAddButton.setText("Add");
         jAddButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -183,48 +168,67 @@ public class InsertJPanel extends javax.swing.JPanel{
             }
         });
 
+        jBrowseButton.setText("Browse");
+        jBrowseButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jBrowseButtonMouseClicked(evt);
+            }
+        });
+        jBrowseButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBrowseButtonActionPerformed(evt);
+            }
+        });
+
+        jLabelImage.setText("jLabel11");
+
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
+                .addGap(222, 222, 222)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel1)
+                    .addComponent(jLabel2)
+                    .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel6, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel7, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel8, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel9, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel10, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addGap(142, 142, 142)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addGap(220, 220, 220)
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel1)
-                            .addComponent(jLabel2)
-                            .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jLabel6, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jLabel7, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jLabel8, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jLabel9, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jLabel10, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                        .addGap(142, 142, 142)
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addGroup(jPanel3Layout.createSequentialGroup()
-                                .addComponent(jMaleRadioButton)
-                                .addGap(18, 18, 18)
-                                .addComponent(jFemaleRadioButton)
-                                .addGap(18, 18, 18)
-                                .addComponent(jOtherRadioButton))
-                            .addComponent(jStartDateText)
-                            .addComponent(jLevelText, javax.swing.GroupLayout.DEFAULT_SIZE, 295, Short.MAX_VALUE)
-                            .addComponent(jTeamText, javax.swing.GroupLayout.DEFAULT_SIZE, 295, Short.MAX_VALUE)
-                            .addComponent(jPositionText, javax.swing.GroupLayout.DEFAULT_SIZE, 295, Short.MAX_VALUE)
-                            .addComponent(jEmailText, javax.swing.GroupLayout.DEFAULT_SIZE, 295, Short.MAX_VALUE)
-                            .addComponent(jPhoneText, javax.swing.GroupLayout.DEFAULT_SIZE, 295, Short.MAX_VALUE)
-                            .addComponent(jAgeText)
-                            .addComponent(jNameText)))
+                        .addComponent(jMaleRadioButton)
+                        .addGap(18, 18, 18)
+                        .addComponent(jFemaleRadioButton)
+                        .addGap(18, 18, 18)
+                        .addComponent(jOtherRadioButton))
+                    .addComponent(jStartDateText)
+                    .addComponent(jLevelText, javax.swing.GroupLayout.DEFAULT_SIZE, 295, Short.MAX_VALUE)
+                    .addComponent(jTeamText, javax.swing.GroupLayout.DEFAULT_SIZE, 295, Short.MAX_VALUE)
+                    .addComponent(jPositionText, javax.swing.GroupLayout.DEFAULT_SIZE, 295, Short.MAX_VALUE)
+                    .addComponent(jEmailText, javax.swing.GroupLayout.DEFAULT_SIZE, 295, Short.MAX_VALUE)
+                    .addComponent(jPhoneText, javax.swing.GroupLayout.DEFAULT_SIZE, 295, Short.MAX_VALUE)
+                    .addComponent(jAgeText)
+                    .addComponent(jNameText)
                     .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addGap(311, 311, 311)
-                        .addComponent(jAddButton)
-                        .addGap(139, 139, 139)
-                        .addComponent(jResetButton)))
-                .addContainerGap(183, Short.MAX_VALUE))
+                        .addComponent(jBrowseButton)
+                        .addGap(18, 18, 18)
+                        .addComponent(jFilePathLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addGap(86, 86, 86)
+                .addComponent(jAddButton)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 229, Short.MAX_VALUE)
+                .addComponent(jLabelImage, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(122, 122, 122)
+                .addComponent(jResetButton)
+                .addGap(162, 162, 162))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -268,12 +272,20 @@ public class InsertJPanel extends javax.swing.JPanel{
                     .addComponent(jLabel8)
                     .addComponent(jEmailText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addComponent(jLabel10)
-                .addGap(28, 28, 28)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jAddButton)
-                    .addComponent(jResetButton))
-                .addContainerGap(15, Short.MAX_VALUE))
+                    .addComponent(jLabel10)
+                    .addComponent(jBrowseButton)
+                    .addComponent(jFilePathLabel))
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGap(16, 16, 16)
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jAddButton)
+                            .addComponent(jResetButton)))
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jLabelImage, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(117, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -305,10 +317,6 @@ public class InsertJPanel extends javax.swing.JPanel{
         gender = "Other";
     }//GEN-LAST:event_jOtherRadioButtonActionPerformed
 
-    private void jStartDateTextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jStartDateTextActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jStartDateTextActionPerformed
-
     private void jAddButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jAddButtonActionPerformed
         // TODO add your handling code here:
         Employee employee = new Employee();
@@ -322,28 +330,15 @@ public class InsertJPanel extends javax.swing.JPanel{
         employee.setPositionTitle(jPositionText.getText());
         employee.setEmailId(jEmailText.getText());
         employee.setPhone(jPhoneText.getText());
+        employee.setPhotoPath(jFilePathLabel.getText());
         
         employee = employeeData.addNewEmployee(employee);
         System.out.println(employeeData.toString());
         this.resetForm();
-        
-        
-        
+       
         JOptionPane.showMessageDialog(this, "Employee data saved successfully ! \n"+employee.toString());
         
     }//GEN-LAST:event_jAddButtonActionPerformed
-
-    private void jNameTextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jNameTextActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jNameTextActionPerformed
-
-    private void jAgeTextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jAgeTextActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jAgeTextActionPerformed
-
-    private void jLevelTextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jLevelTextActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jLevelTextActionPerformed
 
     private void jResetButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jResetButtonActionPerformed
         // TODO add your handling code here:
@@ -361,12 +356,41 @@ public class InsertJPanel extends javax.swing.JPanel{
         gender = "F";
     }//GEN-LAST:event_jFemaleRadioButtonActionPerformed
 
+    private void jBrowseButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jBrowseButtonMouseClicked
+        // TODO add your handling code here:
+        
+    }//GEN-LAST:event_jBrowseButtonMouseClicked
+
+    private void jBrowseButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBrowseButtonActionPerformed
+        // TODO add your handling code here:
+        JFileChooser browseImageFile = new JFileChooser();
+        //Filter image extensions
+        FileNameExtensionFilter fnef = new FileNameExtensionFilter("IMAGES", "png", "jpg", "jpeg");
+        browseImageFile.addChoosableFileFilter(fnef);
+        int showOpenDialogue = browseImageFile.showOpenDialog(null);
+         
+        if (showOpenDialogue == JFileChooser.APPROVE_OPTION) {
+            File selectedImageFile = browseImageFile.getSelectedFile();
+            selectedImagePath = selectedImageFile.getAbsolutePath();
+            jFilePathLabel.setText(selectedImagePath);
+//            JOptionPane.showMessageDialog(null, selectedImagePath);
+            //Display image on jlable
+            ImageIcon ii = new ImageIcon(selectedImagePath);
+//            Resize image to fit jlabel
+            Image image = ii.getImage().getScaledInstance(jLabelImage.getWidth(), jLabelImage.getHeight(), Image.SCALE_SMOOTH);
+             
+            jLabelImage.setIcon(new ImageIcon(image));
+        }
+    }//GEN-LAST:event_jBrowseButtonActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jAddButton;
     private javax.swing.JTextField jAgeText;
+    private javax.swing.JButton jBrowseButton;
     private javax.swing.JTextField jEmailText;
     private javax.swing.JRadioButton jFemaleRadioButton;
+    private javax.swing.JLabel jFilePathLabel;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;
@@ -377,6 +401,7 @@ public class InsertJPanel extends javax.swing.JPanel{
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
+    private javax.swing.JLabel jLabelImage;
     private javax.swing.JTextField jLevelText;
     private javax.swing.JRadioButton jMaleRadioButton;
     private javax.swing.JTextField jNameText;

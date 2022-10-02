@@ -34,8 +34,17 @@ public class Employee {
     private String positionTitle;
     private String phone;
     private String emailId;
+    private String photoPath;
 
     public Employee() {
+    }
+
+    public String getPhotoPath() {
+        return photoPath;
+    }
+
+    public void setPhotoPath(String photoPath) {
+        this.photoPath = photoPath;
     }
 
     public long getEmployeeId() {
@@ -120,8 +129,9 @@ public class Employee {
 
     @Override
     public String toString() {
-        return "\nEmployee{" + "employeeId=" + employeeId + ", name=" + name + ", age=" + age + ", gender=" + gender + ", startDate=" + startDate + ", level=" + level + ", teamInfo=" + teamInfo + ", positionTitle=" + positionTitle + ", phone=" + phone + ", emailId=" + emailId + '}';
+        return "Employee{" + "employeeId=" + employeeId + ", name=" + name + ", age=" + age + ", gender=" + gender + ", startDate=" + startDate + ", level=" + level + ", teamInfo=" + teamInfo + ", positionTitle=" + positionTitle + ", phone=" + phone + ", emailId=" + emailId + ", photoPath=" + photoPath + '}';
     }
+
     
     
     

@@ -6,10 +6,15 @@ package employeedataapp.ui;
 
 import employeedataapp.model.Employee;
 import employeedataapp.model.EmployeeData;
+import java.awt.Image;
+import java.io.File;
 import java.util.ArrayList;
+import javax.swing.ImageIcon;
+import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.JTabbedPane;
 import javax.swing.SwingUtilities;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 /**
  *
@@ -25,6 +30,7 @@ public class UpdateJPanel extends javax.swing.JPanel {
     public EmployeeData employeeData;
     public Employee emp;
     public long ID;
+    public String selectedImagePath = "";
     
     public UpdateJPanel(EmployeeData employeeData, Employee emp) {
         initComponents();
@@ -56,9 +62,17 @@ public class UpdateJPanel extends javax.swing.JPanel {
         jPositionText.setText(emp.getPositionTitle());
         jEmailText.setText(emp.getEmailId());
         jPhoneText.setText(emp.getPhone());
-       System.out.println("Inside set employee "+jLevelText.getText());
-       System.out.println("Inside set employee "+jTeamText.getText());
-       System.out.println("Inside set employee "+jPositionText.getText());
+        
+        if(emp.getPhotoPath() != null){
+        selectedImagePath = emp.getPhotoPath();
+        jPhotoPathLabel.setText(selectedImagePath);
+         //Display image on jlable
+            ImageIcon ii = new ImageIcon(selectedImagePath);
+//            Resize image to fit jlabel
+            Image image = ii.getImage().getScaledInstance(250, 206, Image.SCALE_SMOOTH);
+             
+            jImageLabel.setIcon(new ImageIcon(image));
+        }
      }
    
    public boolean deleteEmployee(Employee emp){
@@ -101,6 +115,9 @@ public class UpdateJPanel extends javax.swing.JPanel {
         jPhoneText = new javax.swing.JTextField();
         jAddButton = new javax.swing.JButton();
         jResetButton = new javax.swing.JButton();
+        jImageLabel = new javax.swing.JLabel();
+        jBrowseButton = new javax.swing.JButton();
+        jPhotoPathLabel = new javax.swing.JLabel();
 
         jLabel1.setText("Name");
 
@@ -181,6 +198,15 @@ public class UpdateJPanel extends javax.swing.JPanel {
             }
         });
 
+        jImageLabel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+
+        jBrowseButton.setText("Browse");
+        jBrowseButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBrowseButtonActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
@@ -188,7 +214,14 @@ public class UpdateJPanel extends javax.swing.JPanel {
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addGap(220, 220, 220)
+                        .addGap(311, 311, 311)
+                        .addComponent(jAddButton)
+                        .addGap(139, 139, 139)
+                        .addComponent(jResetButton))
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGap(40, 40, 40)
+                        .addComponent(jImageLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(49, 49, 49)
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel1)
                             .addComponent(jLabel2)
@@ -210,19 +243,18 @@ public class UpdateJPanel extends javax.swing.JPanel {
                                 .addGap(18, 18, 18)
                                 .addComponent(jOtherRadioButton))
                             .addComponent(jStartDateText)
-                            .addComponent(jLevelText, javax.swing.GroupLayout.DEFAULT_SIZE, 295, Short.MAX_VALUE)
+                            .addComponent(jLevelText)
                             .addComponent(jTeamText)
                             .addComponent(jPositionText)
                             .addComponent(jEmailText)
                             .addComponent(jPhoneText)
                             .addComponent(jAgeText)
-                            .addComponent(jNameText)))
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addGap(311, 311, 311)
-                        .addComponent(jAddButton)
-                        .addGap(139, 139, 139)
-                        .addComponent(jResetButton)))
-                .addContainerGap(33, Short.MAX_VALUE))
+                            .addComponent(jNameText)
+                            .addGroup(jPanel3Layout.createSequentialGroup()
+                                .addComponent(jBrowseButton)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jPhotoPathLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 214, Short.MAX_VALUE)))))
+                .addContainerGap(60, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -235,53 +267,61 @@ public class UpdateJPanel extends javax.swing.JPanel {
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
                     .addComponent(jAgeText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel3)
-                    .addComponent(jMaleRadioButton)
-                    .addComponent(jFemaleRadioButton)
-                    .addComponent(jOtherRadioButton))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel4)
-                    .addComponent(jStartDateText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLevelText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel5))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTeamText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel6))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jPositionText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel7))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel9)
-                    .addComponent(jPhoneText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel3)
+                            .addComponent(jMaleRadioButton)
+                            .addComponent(jFemaleRadioButton)
+                            .addComponent(jOtherRadioButton))
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel4)
+                            .addComponent(jStartDateText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(13, 13, 13)
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLevelText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel5))
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jTeamText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel6))
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jPositionText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel7))
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel9)
+                            .addComponent(jPhoneText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                        .addGap(28, 28, 28)
+                        .addComponent(jImageLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 206, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel8)
                     .addComponent(jEmailText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addComponent(jLabel10)
-                .addGap(28, 28, 28)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel10)
+                    .addComponent(jBrowseButton)
+                    .addComponent(jPhotoPathLabel))
+                .addGap(24, 24, 24)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jAddButton)
                     .addComponent(jResetButton))
-                .addContainerGap(15, Short.MAX_VALUE))
+                .addContainerGap(12, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(150, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(21, 21, 21)
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addContainerGap(109, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -344,6 +384,7 @@ public class UpdateJPanel extends javax.swing.JPanel {
         employee.setPositionTitle(jPositionText.getText());
         employee.setEmailId(jEmailText.getText());
         employee.setPhone(jPhoneText.getText());
+        employee.setPhotoPath(jPhotoPathLabel.getText());
 
 //        employee = employeeData.addNewEmployee(employee);
         ArrayList<Employee> emps = employeeData.getEmployeeList();
@@ -365,20 +406,47 @@ public class UpdateJPanel extends javax.swing.JPanel {
     private void jResetButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jResetButtonActionPerformed
         // TODO add your handling code here:
         if(this.deleteEmployee(emp)){
-        JOptionPane.showMessageDialog(this, "Employee data deleted ! \n"+emp.toString());
+            JTabbedPane parent = (JTabbedPane) SwingUtilities.getAncestorOfClass(JTabbedPane.class, this);
+        parent.remove(this);
+        parent.setSelectedIndex(0);
+        JOptionPane.showMessageDialog(this, "Employee data deleted successfully ! \n"+emp.toString());
         }
         else{
-        JOptionPane.showMessageDialog(this, "Some Error occurred \n"+emp.toString());
+        JOptionPane.showMessageDialog(this, "Some Error occurred. Please try again. \n"+emp.toString());
 
         }
     }//GEN-LAST:event_jResetButtonActionPerformed
 
+    private void jBrowseButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBrowseButtonActionPerformed
+        // TODO add your handling code here:
+        JFileChooser browseImageFile = new JFileChooser();
+        //Filter image extensions
+        FileNameExtensionFilter fnef = new FileNameExtensionFilter("IMAGES", "png", "jpg", "jpeg");
+        browseImageFile.addChoosableFileFilter(fnef);
+        int showOpenDialogue = browseImageFile.showOpenDialog(null);
+         
+        if (showOpenDialogue == JFileChooser.APPROVE_OPTION) {
+            File selectedImageFile = browseImageFile.getSelectedFile();
+            selectedImagePath = selectedImageFile.getAbsolutePath();
+            jPhotoPathLabel.setText(selectedImagePath);
+//            JOptionPane.showMessageDialog(null, selectedImagePath);
+            //Display image on jlable
+            ImageIcon ii = new ImageIcon(selectedImagePath);
+//            Resize image to fit jlabel
+            Image image = ii.getImage().getScaledInstance(jImageLabel.getWidth(), jImageLabel.getHeight(), Image.SCALE_SMOOTH);
+             
+            jImageLabel.setIcon(new ImageIcon(image));
+        }
+    }//GEN-LAST:event_jBrowseButtonActionPerformed
 
+        
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jAddButton;
     private javax.swing.JTextField jAgeText;
+    private javax.swing.JButton jBrowseButton;
     private javax.swing.JTextField jEmailText;
     private javax.swing.JRadioButton jFemaleRadioButton;
+    private javax.swing.JLabel jImageLabel;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;
@@ -395,6 +463,7 @@ public class UpdateJPanel extends javax.swing.JPanel {
     private javax.swing.JRadioButton jOtherRadioButton;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JTextField jPhoneText;
+    private javax.swing.JLabel jPhotoPathLabel;
     private javax.swing.JTextField jPositionText;
     private javax.swing.JButton jResetButton;
     private javax.swing.JTextField jStartDateText;
