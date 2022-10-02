@@ -30,8 +30,7 @@ public class WelcomePage extends javax.swing.JFrame {
         this.ID = employeeData.getId();
             addViewTab();
             addInsertTab();
-            addUpdateTab();
-            addDeleteTab();
+//            addDeleteTab();
         
     jTabbedPane2.addChangeListener(new ChangeListener() {
         @Override
@@ -58,11 +57,6 @@ public class WelcomePage extends javax.swing.JFrame {
         jTabbedPane2.add("View", p2);
     }
     
-    private void addUpdateTab(){
-        InsertJPanel p1=new InsertJPanel(employeeData, ID);
-        p1.setVisible(true);
-        jTabbedPane2.add("Update", p1);
-    }
     
     private void addDeleteTab(){
         InsertJPanel p1=new InsertJPanel(employeeData, ID);

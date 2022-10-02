@@ -7,7 +7,9 @@ package employeedataapp.ui;
 import employeedataapp.model.Employee;
 import employeedataapp.model.EmployeeData;
 import java.util.ArrayList;
+import javax.swing.JTabbedPane;
 import javax.swing.JTable;
+import javax.swing.SwingUtilities;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
@@ -23,9 +25,11 @@ public class ViewEmployeePanel extends javax.swing.JPanel {
      */
     
     public EmployeeData employeeData;
-    public static final String COLUMNS[] = {"ID", "NAME", "GENDER", "LEVEL", "TEAM",};
+    public static final String COLUMNS[] = {"ID", "NAME", "GENDER", "LEVEL", "TEAM"};
     private DefaultTableModel tableModel;
     
+    public UpdateJFrame updateJFrame;
+    public UpdateJPanel updateJPanel;
     
     public ViewEmployeePanel() {
         initComponents();
@@ -55,16 +59,16 @@ public class ViewEmployeePanel extends javax.swing.JPanel {
         tableModel = new DefaultTableModel(data, COLUMNS);
         jTable1.setModel(tableModel);
         
-        
-        jTable1.getSelectionModel().addListSelectionListener(new ListSelectionListener(){
-        @Override
-        public void valueChanged(ListSelectionEvent event) {
-            // do some actions here, for example
-            // print first column value from selected row
-            System.out.println(jTable1.getValueAt(jTable1.getSelectedRow(), 0).toString());
+    }
+    
+    
+    public Employee searchEmployee(long id){
+        for(Employee emp : employeeData.getEmployeeList()){
+            if(emp.getEmployeeId() == id){
+                return emp;
+            }
         }
-        });
-        
+        return null;
     }
     
     
@@ -92,6 +96,11 @@ public class ViewEmployeePanel extends javax.swing.JPanel {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTable1MouseClicked(evt);
+            }
+        });
         jScrollPane2.setViewportView(jTable1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -111,6 +120,22 @@ public class ViewEmployeePanel extends javax.swing.JPanel {
                 .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
+        // TODO add your handling code here:
+        
+            System.out.println(jTable1.getValueAt(jTable1.getSelectedRow(), 0).toString());
+            long employeeId = Long.parseLong(jTable1.getValueAt(jTable1.getSelectedRow(), 0).toString());
+            System.out.println("employee id = "+employeeId);
+            JTabbedPane parent = (JTabbedPane) SwingUtilities.getAncestorOfClass(JTabbedPane.class, this);
+            updateJPanel = new UpdateJPanel(employeeData, searchEmployee(employeeId));
+            updateJPanel.setVisible(true);
+            parent.add("Details", updateJPanel);
+            updateJPanel.setEmployee(searchEmployee(employeeId));
+            parent.setSelectedIndex(2);
+//            new UpdateJFrame(employeeData,searchEmployee(employeeId));
+        
+    }//GEN-LAST:event_jTable1MouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

@@ -27,10 +27,27 @@ public class InsertJPanel extends javax.swing.JPanel{
         
         this.employeeData = employeeData;
         this.ID = ID;
+        System.out.println("Inside InsertPanel");
         createButtonGroup();
     }
     
-  
+   public void setEmployee(Employee emp){
+         jNameText.setText(emp.getName());
+        jAgeText.setText(String.valueOf(emp.getAge()));
+        if(emp.getGender().equalsIgnoreCase("M"))
+            jMaleRadioButton.setSelected(true);
+        if(emp.getGender().equalsIgnoreCase("F"))
+            jFemaleRadioButton.setSelected(true);
+        if(emp.getGender().equalsIgnoreCase("Other"))
+            jOtherRadioButton.setSelected(true);
+        jStartDateText.setText(emp.getStartDate());
+        jLevelText.setText(emp.getLevel());
+        jTeamText.setText(emp.getTeamInfo());
+        jPositionText.setText(emp.getPositionTitle());
+        jEmailText.setText(emp.getEmailId());
+        jPhoneText.setText(emp.getPhone());
+     }
+
     
     private void createButtonGroup(){
         radioButtonGroup.add(jMaleRadioButton);
@@ -207,7 +224,7 @@ public class InsertJPanel extends javax.swing.JPanel{
                         .addComponent(jAddButton)
                         .addGap(139, 139, 139)
                         .addComponent(jResetButton)))
-                .addContainerGap(201, Short.MAX_VALUE))
+                .addContainerGap(183, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -256,7 +273,7 @@ public class InsertJPanel extends javax.swing.JPanel{
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jAddButton)
                     .addComponent(jResetButton))
-                .addContainerGap(45, Short.MAX_VALUE))
+                .addContainerGap(15, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
