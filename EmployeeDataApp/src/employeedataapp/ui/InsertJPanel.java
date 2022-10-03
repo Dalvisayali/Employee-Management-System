@@ -16,6 +16,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.regex.Pattern;
+import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
@@ -38,7 +39,7 @@ public class InsertJPanel extends javax.swing.JPanel{
     public long ID;
     public String selectedImagePath = "";
     public String selectedLevel = "";
-    public boolean isUpdateScreen = false;
+    public boolean isFormValid = true;
     public Employee emp;
     
     public InsertJPanel(EmployeeData employeeData, long ID) {
@@ -109,7 +110,7 @@ public class InsertJPanel extends javax.swing.JPanel{
          //Display image on jlable
             ImageIcon ii = new ImageIcon(selectedImagePath);
 //            Resize image to fit jlabel
-            Image image = ii.getImage().getScaledInstance(250, 206, Image.SCALE_SMOOTH);
+            Image image = ii.getImage().getScaledInstance(269, 206, Image.SCALE_SMOOTH);
              
             jLabelImage.setIcon(new ImageIcon(image));
         }
@@ -177,6 +178,9 @@ public class InsertJPanel extends javax.swing.JPanel{
         jEmailText.setText("");
         jPhoneText.setText("");
         jFilePathLabel.setText("");
+        jLabelImage.setText("Photo");
+        ImageIcon icon = new ImageIcon();
+        jLabelImage.setIcon(icon);
     }
     
      
@@ -188,7 +192,6 @@ public class InsertJPanel extends javax.swing.JPanel{
         // TODO add your handling code here:
         if(this.deleteEmployee(emp)){
             JTabbedPane parent = (JTabbedPane) SwingUtilities.getAncestorOfClass(JTabbedPane.class, this);
-        parent.remove(this);
         parent.setSelectedIndex(0);
         JOptionPane.showMessageDialog(this, "Employee data deleted successfully ! \n"+emp.toString());
         }
@@ -232,13 +235,16 @@ public class InsertJPanel extends javax.swing.JPanel{
         }
 //        System.out.println(employeeData.toString());
         JTabbedPane parent = (JTabbedPane) SwingUtilities.getAncestorOfClass(JTabbedPane.class, this);
-        parent.remove(this);
         parent.setSelectedIndex(0);
-        JOptionPane.showMessageDialog(this, "Employee data saved successfully ! \n"+employee.toString());
+        JOptionPane.showMessageDialog(this, "Employee data saved successfully !");
 
     }  
    
    private void jAddButtonClicked(){
+       if(jNameText.getText().length() > 0
+               && jAgeText.getText().length() > 0
+               && jAgeText.getText() != null
+               && isFormValid){
         Employee employee = new Employee();
         employee.setEmployeeId(ID++);
         employee.setName(jNameText.getText());
@@ -256,7 +262,12 @@ public class InsertJPanel extends javax.swing.JPanel{
         System.out.println(employeeData.toString());
         this.resetForm();
        
-        JOptionPane.showMessageDialog(this, "Employee data saved successfully ! \n"+employee.toString());
+        JOptionPane.showMessageDialog(this, "Employee data saved successfully ! \n");
+       }
+       else{
+           JOptionPane.showMessageDialog(this, "Employee data cannot be saved ! \n");
+
+       }
         
    }
    
@@ -299,9 +310,9 @@ public class InsertJPanel extends javax.swing.JPanel{
         jLevelComboBox = new javax.swing.JComboBox<>();
         jLabelImage = new javax.swing.JLabel();
 
-        jLabel1.setText("Name");
+        jLabel1.setText("Name*");
 
-        jLabel2.setText("Age");
+        jLabel2.setText("Age*");
 
         jLabel3.setText("Gender");
 
@@ -380,8 +391,6 @@ public class InsertJPanel extends javax.swing.JPanel{
                 jBrowseButtonActionPerformed(evt);
             }
         });
-
-        jFilePathLabel.setText("hiiiiiiiiiii");
 
         jLevelComboBox.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -573,20 +582,28 @@ public class InsertJPanel extends javax.swing.JPanel{
     private void jAgeTextFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jAgeTextFocusLost
         // TODO add your handling code here:
         if( ! isNumeric(jAgeText.getText())){
+            isFormValid = false;
             JOptionPane.showMessageDialog(this,
     "Age should be an integer.",
     "Error",
     JOptionPane.ERROR_MESSAGE);
+        }
+        else{
+            isFormValid = true;
         }
     }//GEN-LAST:event_jAgeTextFocusLost
 
     private void jPhoneTextFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jPhoneTextFocusLost
         // TODO add your handling code here:
         if( !isNumeric(jPhoneText.getText()) || jPhoneText.getText().length() < 10){
+            isFormValid = false;
             JOptionPane.showMessageDialog(this,
     "Phone should be a 10 digit number.",
     "Error",
     JOptionPane.ERROR_MESSAGE);
+        }
+        else{
+            isFormValid = true;
         }
     }//GEN-LAST:event_jPhoneTextFocusLost
 
@@ -595,10 +612,14 @@ public class InsertJPanel extends javax.swing.JPanel{
         String regexPattern = "^(.+)@(\\S+)$";
         String emailAddress = jEmailText.getText();
         if( !Pattern.compile(regexPattern).matcher(emailAddress).matches()){
+            isFormValid = false;
             JOptionPane.showMessageDialog(this,
     "Email Id should be in \"username@domain.com\" format.",
     "Error",
     JOptionPane.ERROR_MESSAGE);
+        }
+        else{
+            isFormValid = true;
         }
         
     }//GEN-LAST:event_jEmailTextFocusLost
@@ -620,12 +641,14 @@ public class InsertJPanel extends javax.swing.JPanel{
 	    catch (ParseException e)
 	    {
 	        System.out.println(strDate+" is Invalid Date format");
+                isFormValid = false;
                 JOptionPane.showMessageDialog(this,
             "Please enter date in MM/dd/yyyy format",
             "Error",
         JOptionPane.ERROR_MESSAGE);
 	        return false;
 	    }
+            isFormValid = true;
 	    return true;
 	}
    }

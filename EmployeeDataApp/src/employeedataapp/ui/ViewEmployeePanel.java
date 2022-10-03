@@ -94,11 +94,6 @@ public class ViewEmployeePanel extends javax.swing.JPanel {
         
         jTable1.getColumnModel().getColumn(0).setResizable(false);
         jTable1.getColumnModel().getColumn(0).setPreferredWidth(3);
-         DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
-        centerRenderer.setHorizontalAlignment(JLabel.CENTER);
-
-//        jTable1.getColumnModel().getColumn(0).setCellRenderer(centerRenderer);
-        jTable1.getColumnModel().getColumn(1).setCellRenderer(centerRenderer);
     }
 
     /**

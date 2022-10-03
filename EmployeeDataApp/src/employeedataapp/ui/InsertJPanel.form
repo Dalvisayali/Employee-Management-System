@@ -180,12 +180,12 @@
       <SubComponents>
         <Component class="javax.swing.JLabel" name="jLabel1">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Name"/>
+            <Property name="text" type="java.lang.String" value="Name*"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel2">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Age"/>
+            <Property name="text" type="java.lang.String" value="Age*"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel3">
@@ -301,9 +301,6 @@
           </Events>
         </Component>
         <Component class="javax.swing.JLabel" name="jFilePathLabel">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="hiiiiiiiiiii"/>
-          </Properties>
         </Component>
         <Component class="javax.swing.JComboBox" name="jLevelComboBox">
           <Properties>

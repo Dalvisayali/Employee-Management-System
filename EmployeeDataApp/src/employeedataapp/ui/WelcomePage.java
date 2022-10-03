@@ -38,7 +38,7 @@ public class WelcomePage extends javax.swing.JFrame {
         public void stateChanged(ChangeEvent e) {
             System.out.println("Tab: " + jTabbedPane2.getSelectedIndex());
             p2.initialiseTable(employeeData);
-            p1=new InsertJPanel(employeeData, ID);
+            p1=new InsertJPanel(employeeData, employeeData.getId());
             jTabbedPane2.setComponentAt(1,p1);
 //            System.out.println("Employee Data : "+employeeData.toString());
         }
